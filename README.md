@@ -20,8 +20,8 @@ For Yu-Gi-Oh! players, we only care about strong cards, and therefore, each "Num
 
 On a rating of 1 to 10 for how powerful a card is, 10 being extremely powerful, and 1 being not-so-powerful, I want to create a list of combinations for Numbers Eveil with ratings for each result possible.
 
-For this, we will iterate over all known "Number" monsters, and look for each and every possible solution to that formula. This is an intense computation of discrete [combination](https://en.wikipedia.org/wiki/Combination) and as such requires a bit of engineering in order to not overwhelm a computer's memory bank.
+For this, we will iterate over all known "Number" monsters, and look for each and every possible solution to that formula. This is an intense computation of [discrete combination](https://en.wikipedia.org/wiki/Combination) and as such requires a bit of engineering in order to not overwhelm a computer's memory bank.
 
 ## Other Restrictions
 
-This follows the Yu-Gi-Oh! TCG banlist, and as such, cards like [Rhongo](https://yugipedia.com/wiki/Number_86:_Heroic_Champion_-_Rhongomyniad) or [Shock Master](https://yugipedia.com/wiki/Number_16:_Shock_Master) are effectively not computed. If you would *like* to put them back into the pool, simply clone the project and un-comment them from the data tables (they exist, but they're commented out).
+Yu-Gi-Oh! official paper play follows two banlists, depending on where you live. This program will contain two ban lists updated (in)frequently to support both lists. Ban lists are used by default when running this program, and defaults to TCG banlist. To follow the OCG banlist, use `--ocg`. To have *no* banlists, use the `--no-banlist` flag instead. (Note: they differ *very* little)
