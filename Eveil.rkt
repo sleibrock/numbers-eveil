@@ -49,16 +49,12 @@
     (and (< (NumberCard-number candidate)
             (NumberCard-number target))
          (not (string=? (NumberCard-name candidate)
-                        (NumberCard-name target)))
-         ;(not (= (NumberCard-rank candidate)
-         ;        (NumberCard-rank target)))
-         )))
+                        (NumberCard-name target))))))
 
 
-; Check a card's legality against current parameter
+; Check a card's legality against current parameter banlist
 (define (is-legal? card)
-  (eqv? #f (member (NumberCard-name card)
-                   (get-banlist))))
+  (eqv? #f (member (NumberCard-name card) (get-banlist))))
 
 
 ; Main recursive function to process all cards
@@ -88,7 +84,7 @@
     (λ (outport)
       (parameterize ([current-output-port outport])
         (printf "Target\tA\tB\tC\tD\n")
-        (process-cards Numbers-list))))
+        (process-cards (filter is-legal? Numbers-list)))))
   (displayln ">>> Done! >>>"))
 
 
@@ -97,6 +93,8 @@
   (command-line
    #:program "NumbersEveil"
    #:once-any
+   [("--tcg") "Use the TCG banlist (default)"
+              (*banlist?* 'tcg)]
    [("--ocg") "Use the OCG banlist"
               (*banlist?* 'ocg)]
    [("--no-banlist") "Use no banlist"

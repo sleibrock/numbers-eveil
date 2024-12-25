@@ -17,7 +17,7 @@
    "Number 42: Galaxy Tomahawk"                ; links don't exist right?
    "Number 86: Heroic Champion - Rhongomyniad" ; nobody can summon 5 monsters right?
    "Number 89: Diablosis the Mind Hacker"      ; honorary Kashtira
-   "Number 95: Galaxy-Eyes Dark Matter Dragon"
+   "Number 95: Galaxy-Eyes Dark Matter Dragon" ; foolish 3, why not?
    "Number S0: Utopic Zexal"                   ; who came up with this card?
    ))
 
@@ -31,10 +31,14 @@
    "Number S0: Utopic Zexal"
    ))
 
+; sort card function (so it's not wedged in the data list)
+(define (sort-cards cards)
+  (sort cards > #:key NumberCard-number))
+
 
 ; Literally every Number card in the game!
 (define Numbers-list 
-  (sort
+  (sort-cards
    (map
     (λ (number-data)
       (begin
@@ -149,7 +153,7 @@
       ("Number 92: Heart-eartH Dragon"                       9  92 dark dragon 8)
       ("Number 93: Utopia Kaiser"                           12  93 light warrior 8)
       ("Number 94: Crystalzero"                              5  94 water warrior 2)
-      ;("Number 95: Galaxy-Eyes Dark Matter Dragon"           9  95 dark dragon 10)
+      ("Number 95: Galaxy-Eyes Dark Matter Dragon"           9  95 dark dragon 10)
       ("Number 96: Dark Mist"                                2  96 dark fiend 4)
       ("Number 97: Draglubion"                               8  97 dark dragon 8)
       ("Number 98: Antitopian"                               4  98 dark warrior 2)
@@ -192,6 +196,7 @@
       ("Number C105: Battlin' Boxer Comet Cestus"            5 105 fire warrior 3)
       ("Number C106: Giant Red Hand"                         5 106 earth rock 7)
       ("Number C107: Neo Galaxy-Eyes Tachyon Dragon"         9 107 light dragon 5)
+      ; mathematically, these two can never be used in Numbers Eveil
       ;("Number C1000: Numeronious"                         12 1000 light fiend 5)
       ;("Number iC1000: Numerounius Numerounia"             13 1000 light fiend 5)
       ; Shining Numbers
@@ -204,10 +209,7 @@
       ("Number F0: Utopic Future Slash"                      1   0 light warrior 3)
       ; Other stuff
       ;("Number XX: Utopic Dark Infinity" 12 0 dark warrior 3) ; no actual number
-      ))
-   >
-   #:key NumberCard-number
-   ))
+      ))))
   
 
 (module+ test
