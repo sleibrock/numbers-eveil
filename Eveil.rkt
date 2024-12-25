@@ -61,6 +61,26 @@
                    (get-banlist))))
 
 
+; Main recursive function to process all cards
+; This operates on the assumption that the list of cards is
+; sorted in a reverse order of top-to-bottom (107 ... 1)
+; in order to help eliminate valid candidates a bit faster
+; ie. all cards after the current head are valid number candidates
+; such that the list is [107, 106, 105, ...] and we recursively
+; pass the cdr with each cycle 
+(define (process-cards cards)
+  (if (eqv? '() cards)
+      (void)
+      (let* ([target-card (car cards)]
+             [tail        (cdr cards)]
+             [candidates  (filter (by target-card) tail)]
+             [combos      (in-combinations candidates 4)])
+        (for ([combo combos])
+          (when (valid-eveil? combo target-card)
+            (write-eveil combo target-card)))
+        (process-cards tail))))
+  
+
 ; Main program run
 (define (Numbers-Eveil file-path)
   (displayln ">>> Numbers Eveil computer <<<")
@@ -68,12 +88,7 @@
     (λ (outport)
       (parameterize ([current-output-port outport])
         (printf "Target\tA\tB\tC\tD\n")
-        (for ([target-card Numbers-list])
-          (define candidates  (filter (by target-card) Numbers-list))
-          (define combos      (in-combinations candidates 4))
-          (for ([combo combos])
-            (when (valid-eveil? combo target-card)
-              (write-eveil combo target-card)))))))
+        (process-cards Numbers-list))))
   (displayln ">>> Done! >>>"))
 
 
